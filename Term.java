@@ -98,10 +98,6 @@ public class Term extends Expression {
                                 if (enclosedFactor.getExponent()==null)
                                 {
                                     enclosedFactor.setExponent(createDeepCopy(factor.getExponent()));
-                                    if (enclosedFactor.getTerms().size()==1)
-                                    {
-                                        Term term = enclosedFactor.getFirstTerm();
-                                    }
                                 }
                                 else
                                 {
@@ -355,36 +351,9 @@ public class Term extends Expression {
         }
     }
     
-    public void combineLikeExponents()
-    {
-        for (int i=0; i<factors.size(); i++)
-        {
-            Expression factor1 = factors.get(i);
-            if (factor1.getExponent()!=null && factor1.getExponent()!=createExpressionWithFactor(new Num(1)) && factor1.getExponent()!=createExpressionWithFactor(new Num(-1)))
-            {
-                Expression exponent1 = createDeepCopy(factor1.getExponent());
-                for (int j=i+1; j<factors.size(); j++)
-                {
-                    if (factors.get(j).getExponent()!=null)
-                    {
-                        if (exponent1.equals(createDeepCopy(factors.get(j).getExponent())))
-                        {
-                            factor1 = createExpressionWithFactor(factor1);
-                            factor1.addFactor(factors.get(j));
-                            factor1.setExponent(exponent1);
-                            factors.set(i,factor1);
-                            factors.remove(j);
-                            j--;
-                        }
-                    }
-                }
-            }
-        }
-        
-    }
+    
     public void simplifyTerm()
     {
-        
         simplifyAbsoluteValues();
         factors = removeEmptyExpressions(factors);
         expandExpressionsInTerm();
@@ -392,8 +361,6 @@ public class Term extends Expression {
         combineLikeBases();
         simplifyNumsInTerm();
         expandRemainingExpressions();
-
-        //combineLikeExponents();
     }
 
     public void printTerm()
@@ -506,6 +473,4 @@ public class Term extends Expression {
         
         }
     }
-    
-
 }
