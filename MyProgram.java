@@ -3,38 +3,19 @@ public class MyProgram
 {
     public static void main(String[] args)
     {        
-        /*
-        System.out.println("f(x) = 49/7*x^(3+1)+8xsin(x)+2-1");
-        System.out.println("= 7*x^(4)+8xsin(x)+1\n");
-        
-        System.out.println("f'(x) = d/dx(7x^4+8xsin(cos(9x))+1)");
-        System.out.println("= d/dx(7x^4)+d/dx(8xsin(cos(9x)))+d/dx(1)");
-        System.out.println("= 7*d/dx(x^4)+8*d/dx(xsin(cos(9x)))");
-        System.out.println("= 28x^3+8(d/dx(x)*sin(cos(9x))+d/du(sin(u))*d/dx(u)*x)       *u=cos(9x)");
-        System.out.println("= 28x^3+8sin(cos(9x))+72cos(u)*d/dx(k)x               *k=9x");
-        System.out.println("= 28x^3+8sin(cos(9x))+72cos(cos(9x))*cos(9x)*9*\n");
-        */
-        /*
-        System.out.println("f'(x) = (7x^4+8xsin(x)+1)'");
-        System.out.println("= (7x^4)'+(8xsin(x))'+(1)'");
-        System.out.println("= 7*(x^4)'+8*(xsin(x))'");
-        System.out.println("= 28x^5+8((x)'*sin(x)+(sin(x))'*x)");
-        System.out.println("= 28x^5+8sin(x)+cos(x)x\n");
-        */
         Scanner input = new Scanner(System.in);
         System.out.println("Enter function to take derivitive of (for example, f(x) = e^x-sin(2x)).\n");
         //System.out.println("Hit ENTER to take derivitive again.\n");
         System.out.print("f(x) = ");
-        String userInput = input.nextLine()+" ";
+        String userInput = input.nextLine();
         Expression expression = convertStringToExpression(userInput);
-        Expression.setMainExpression(expression);
         expression.simplifyExpression();
+        //userInput = input.nextLine()
         System.out.println();
         int n = 1;
         while (true)
         {
             expression = expression.takeDerivitive("x");
-
             String derivitiveString = convertExpressionToString(expression);
         
             if (n==1)
@@ -46,12 +27,12 @@ public class MyProgram
             System.out.println(derivitiveString);
             System.out.println();
             System.out.print("Hit enter to take the "+((int)n+1)+" derivitive. Or enter another function to take derivitive of: ");
-            String response = input.nextLine();
+            userInput = input.nextLine();
             System.out.println();
-            if (!(response.equals("")))
+            if (!(userInput.equals("")))
             {
-                System.out.println("f(x) = "+response+"\n");
-                expression = convertStringToExpression(response);
+                System.out.println("f(x) = "+userInput+"\n");
+                expression = convertStringToExpression(userInput);
                 expression.simplifyExpression();
                 n=0;
             }
@@ -62,6 +43,7 @@ public class MyProgram
     
     public static Expression convertStringToExpression(String string)
     {
+        string+=" ";
         Expression currentExpression = new Expression();
         Expression expression = new Expression();
         expression.addFactor(currentExpression);
@@ -256,7 +238,6 @@ public class MyProgram
 
             }
         }
-        
         return expression;
     }
     public static String convertExpressionToString(Expression expression)
@@ -414,7 +395,7 @@ public class MyProgram
         if (expression.getExponent()!=null)
         {
             string+="^"+convertExpressionToString(expression.getExponent());
-            if (string.length()>index+2 && expression.getExponent().getTerms().size()==1 && ((Term)expression.getExponent().getTerms().get(0)).getFactors().size()==1 && ((Term)expression.getExponent().getTerms().get(0)).getFactors().get(0).getExponent()==null)
+            if (string.length()>index+2 && string.charAt(index+1)=='('&&expression.getExponent().getTerms().size()==1 && ((Term)expression.getExponent().getTerms().get(0)).getFactors().size()==1 && ((Term)expression.getExponent().getTerms().get(0)).getFactors().get(0).getExponent()==null)
             {
                 string=string.substring(0,index+1)+string.substring(index+2,string.length()-1);
                 if (((Term)expression.getExponent().getTerms().get(0)).getFactors().get(0) instanceof Num && ((Num)((Term)expression.getExponent().getTerms().get(0)).getFactors().get(0)).getValue()==1)
