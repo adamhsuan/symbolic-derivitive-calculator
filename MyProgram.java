@@ -26,9 +26,11 @@ public class MyProgram
                 System.out.print("f^("+n+")(x) = ");
             System.out.println(derivitiveString);
             System.out.println();
-            System.out.print("Hit enter to take the "+((int)n+1)+" derivitive. Or enter another function to take derivitive of: ");
+            System.out.print("Hit enter to take the "+((int)n+1)+" derivitive. Or enter another function to take derivitive of. Enter -1 to quit: ");
             userInput = input.nextLine();
             System.out.println();
+            if (userInput.equals("-1"))
+                break;
             if (!(userInput.equals("")))
             {
                 System.out.println("f(x) = "+userInput+"\n");
@@ -37,8 +39,8 @@ public class MyProgram
                 n=0;
             }
             n++;
-
         }
+        input.close();
     }
     
     public static Expression convertStringToExpression(String string)
@@ -202,7 +204,6 @@ public class MyProgram
             {   
                 if (isNum=true)
                 {
-                    Expression base = currentExpression;
                     currentNum = 0;
                     isNum=false;
                 }
@@ -263,7 +264,6 @@ public class MyProgram
             
         }
         String string = "";     
-        int index0=string.length();
         if (expression.isInstanceOfExpression())
         {
             if (expression.getIsAbsoluteValue())
