@@ -31,7 +31,6 @@ public class Expression {
     public Expression(ArrayList<Expression> terms)
     {
         this.terms = terms;
-        //exponent = null;
     }
     public Expression(ArrayList<Expression> terms, Expression exponent)
     {
@@ -268,7 +267,6 @@ public class Expression {
             }
             return false;
         }
-        //else if (this.getClass() == other.getClass() && this.getTerms()!=null && other.getTerms()!=null)
         else if (this.isInstanceOfExpression() && other.isInstanceOfExpression() && this.getIsAbsoluteValue() == other.getIsAbsoluteValue())
         {
             ArrayList<Expression> thisTerms = new ArrayList<Expression>(this.getTerms());
@@ -333,20 +331,7 @@ public class Expression {
         removeExtraOnesAndZeroes();
         int numerator=0;
         int denominator=1;
-        //make sure there are no rational exponents
         Expression negativeOne = createExpressionWithFactor(new Num(-1));
-        /*
-        for (Expression term : terms)
-        {
-            for (Expression factor : ((Term)term).getFactors())
-            {
-                if (!(factor.getExponent()==null || factor.getExponent().equals(negativeOne)))
-                {
-                    return;
-                }
-            }
-        }
-        */
         for (int i=0; i<terms.size(); i++)
         {
             if (((Term)terms.get(i)).getFactors().size()==1 && ((Term)terms.get(i)).getFactors().get(0).getExponent()!=null && ((Term)terms.get(i)).getFactors().get(0).getExponent().equals(negativeOne))
@@ -389,14 +374,6 @@ public class Expression {
     
     public void moveInnerExpressionsOut()
     {
-        /*
-        System.out.println("TEST");
-        if (terms.size() == 1 && ((Term)terms.get(0)).getFactors().size() == 1 && ((Term)terms.get(0)).getFactors().get(0).isInstanceOfExpression()&&((Term)terms.get(0)).getFactors().get(0).getExponent()==null)
-        {
-            Expression innerExpression = (((Term)terms.get(0)).getFactors().get(0));
-        }
-        else
-        */
         if(true)
         {
             for (int i=0; i<terms.size(); i++)
@@ -414,7 +391,6 @@ public class Expression {
         }
         
     }
-    //check this again for AbsoluteValue 
     public void removeExtraOnesAndZeroes()
     {
         for (int i=0; i<terms.size(); i++)
@@ -437,7 +413,6 @@ public class Expression {
                     break;
                     }
                     else if (((Num)factor).getValue()==1 && (((Num)factor).getExponent()==null ||  isNumeric(((Num)factor).getExponent())) && ((Term)terms.get(i)).getFactors().size()>1)
-                    //else if (((Num)factor).getValue()==1 && ((Num)factor).getExponent()==null && ((Term)terms.get(i)).getFactors().size()>1)
                     {
                         ArrayList<Expression> factors = ((Term)terms.get(i)).getFactors();
                         factors.remove(j);
@@ -565,13 +540,11 @@ public class Expression {
                     if (factor.getExponent().equals(negativeOneHalf))
                         sqrtFactor.setExponent(createExpressionWithFactor(new Num(-1)));
                     factor.setExponent(null);
-                    //factor = sqrtFactor;
                     ((Term)terms.get(i)).getFactors().set(j,sqrtFactor);
                 }
             }
         }
     }
-    //check for absolute value
     public void simplifyExpression()
     {
         setTerms(removeEmptyExpressions(getTerms()));
@@ -582,8 +555,6 @@ public class Expression {
         moveInnerExpressionsOut();
         removeExtraOnesAndZeroes();
         combineLikeTerms();
-        //setTerms(removeEmptyExpressions(getTerms()));
-        //removeExtraOnesAndZeroes();
     }
     
     public Expression takeDerivitive(String variableName)
