@@ -5,12 +5,10 @@ public class MyProgram
     {        
         Scanner input = new Scanner(System.in);
         System.out.println("Enter function to take derivitive of (for example, f(x) = e^x-sin(2x)).\n");
-        //System.out.println("Hit ENTER to take derivitive again.\n");
         System.out.print("f(x) = ");
         String userInput = input.nextLine();
         Expression expression = convertStringToExpression(userInput);
         expression.simplifyExpression();
-        //userInput = input.nextLine()
         System.out.println();
         int n = 1;
         while (true)
@@ -196,7 +194,6 @@ public class MyProgram
                     currentExpression = new Expression();
                     ((Term) outerExpression.getOuterExpression()).addFactor(currentExpression);
                 }                
-                //verify this works
                 if (!(character == ')' && outerExpression.getOuterExpression().getIsAbsoluteValue()))
                     openAbsoluteValue = true;
             }
@@ -379,15 +376,12 @@ public class MyProgram
             if (expression.getExponent()!=null)
                 string+="(";
             string+=((Function)expression).getType();
-            //not ideal, fix
-            //if (((Function)expression).getType().equals("sqrt"))
-                 string+="(";
+            string+="(";
             String argument = convertExpressionToString(((Function)expression).getArgument());
             if (argument.length()>0 && argument.charAt(0)=='(')
                 argument = argument.substring(1,argument.length()-1);
             string+=argument;
-            //if (((Function)expression).getType().equals("sqrt"))
-                 string+=")";
+            string+=")";
             if (expression.getExponent()!=null)
                 string+=")";
         }
